@@ -1,6 +1,6 @@
 import type { Partner } from '@/components/site/partner-card'
 
-export const FIRM_EMAIL = 'devops@college.edu'
+export const FIRM_EMAIL = 'devops@bennett.edu.in'
 
 export const namePartners: Partner[] = [
   {
@@ -11,7 +11,7 @@ export const namePartners: Partner[] = [
     year: 'Final Year · CSE',
     quote: "I don't play the odds. I play the pipeline.",
     stack: ['Kubernetes', 'ArgoCD', 'AWS'],
-    record: '41–0',
+    record: '37-4',
   },
   {
     name: 'Meera Pearson',
@@ -44,11 +44,11 @@ export const seniorPartners: Partner[] = [
     year: '3rd Year · ECE',
     quote: "I'm on-call. I know everything.",
     stack: ['Prometheus', 'Grafana', 'Linux'],
-    record: '33–0',
+    record: '31–2',
   },
   {
     name: 'Kabir Ross',
-    title: 'Senior Associate',
+    title: 'Senior Partner',
     role: 'Cloud Lead',
     alias: 'The Memory',
     year: '3rd Year · CSE',
@@ -58,7 +58,7 @@ export const seniorPartners: Partner[] = [
   },
   {
     name: 'Ananya Zane',
-    title: 'Senior Associate',
+    title: 'Senior Partner',
     role: 'Design & Outreach',
     alias: 'The Counsel',
     year: '3rd Year · IT',

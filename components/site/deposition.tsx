@@ -107,7 +107,7 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
 
   if (cmd === 'git log')
     return [
-      out('a1f9c3e  feat: K8s bootcamp — 120 associates onboarded', 'ok'),
+      out('a1f9c3e  feat: K8s bootcamp — 180 associates onboarded', 'ok'),
       out('7e02b1d  fix: hackathon infra survived 9k req/s', 'ok'),
       out('c44d8aa  chore: migrated club site to GitOps', 'ok'),
       out('0b7f12e  docs: postmortem for "The Great DNS Outage"', 'ok'),

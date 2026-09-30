@@ -47,7 +47,7 @@ const cases: {
     summary: 'Guest SRE from a unicorn startup on progressive delivery, feature flags and canaries.',
   },
   {
-    no: '25-CV-0311',
+    no: '26-CV-0311',
     title: 'Litt v. The Monolith',
     kind: 'Project',
     date: 'Mar 2026',
@@ -55,7 +55,7 @@ const cases: {
     summary: 'Migrated the college fest portal to microservices on k3s. Monolith agreed to a peaceful split.',
   },
   {
-    no: '25-CV-0277',
+    no: '26-CV-0277',
     title: 'Paulsen v. Alert Fatigue',
     kind: 'Project',
     date: 'Jan 2026',

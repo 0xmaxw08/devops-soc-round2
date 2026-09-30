@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   title: 'Specter & Ops — The DevOps Club',
   description:
     'The DevOps Club, run like a Manhattan law firm. We automate, we deploy, we win. Pipelines, containers, cloud and the art of the closing argument.',
-  generator: 'v0.app',
   icons: {
     icon: [
       { url: '/icon-light-32x32.png', media: '(prefers-color-scheme: light)' },

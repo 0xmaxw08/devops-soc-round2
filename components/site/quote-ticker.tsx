@@ -12,12 +12,10 @@ export function QuoteTicker() {
   const row = [...quotes, ...quotes]
   return (
     <section aria-label="Firm sayings" className="overflow-hidden border-y border-border bg-gold py-4 text-ink">
-      <ul className="flex w-max animate-marquee gap-12">
+      <ul className="flex w-max animate-marquee">
         {row.map((q, i) => (
-          <li
-            key={i}
-            aria-hidden={i >= quotes.length}
-            className="flex shrink-0 items-center gap-12 font-serif text-2xl italic"
+            <li key={i} aria-hidden={i >= quotes.length}
+                className="flex shrink-0 items-center gap-12 pr-12 font-serif text-2xl italic"
           >
             {q}
             <span className="font-mono text-sm not-italic">§</span>

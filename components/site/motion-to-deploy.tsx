@@ -17,6 +17,7 @@ const stages = [
   { label: 'Verdict', detail: 'argocd sync · canary 10→100%', ms: 1400 },
 ]
 
+// Index of Cross-Examination, the stage where opposing counsel can fail a test
 const TEST_STAGE = 2
 
 export function MotionToDeploy() {
@@ -31,13 +32,14 @@ export function MotionToDeploy() {
   const sectionRef = useRef<HTMLElement>(null)
   const logRef = useRef<HTMLDivElement>(null)
 
-  const push = (tone: LogLine['tone'], text: string) => {
+  const addLog = (tone: LogLine['tone'], text: string) => {
     const t = ((performance.now() - startedAt.current) / 1000).toFixed(1)
     lineId.current += 1
     setLog((l) => [...l, { id: lineId.current, tone, text: `[+${t}s] ${text}` }])
   }
 
   const fileMotion = () => {
+    // The button is disabled while running, but the palette and terminal can still call this
     if (status === 'running') return
     startedAt.current = performance.now()
     lineId.current = 0
@@ -48,6 +50,7 @@ export function MotionToDeploy() {
     setStats((s) => ({ ...s, filed: s.filed + 1 }))
   }
 
+  // Always points at the latest fileMotion, so the window listener never uses a stale one
   const fileMotionRef = useRef(fileMotion)
   fileMotionRef.current = fileMotion
 
@@ -65,15 +68,15 @@ export function MotionToDeploy() {
     const current = stages[stage]
     const timer = setTimeout(() => {
       if (stage === TEST_STAGE && chaos && !overruled) {
-        push('err', `${current.label} — FAILED: opposing counsel found a flaky test`)
-        push('err', 'OBJECTION! Pipeline halted pending ruling.')
+        addLog('err', `${current.label} — FAILED: opposing counsel found a flaky test`)
+        addLog('err', 'OBJECTION! Pipeline halted pending ruling.')
         setStatus('objection')
         return
       }
-      push('ok', `${current.label} — ${current.detail} [sustained]`)
+      addLog('ok', `${current.label} — ${current.detail} [sustained]`)
       if (stage === stages.length - 1) {
         const ms = performance.now() - startedAt.current
-        push('gold', `VERDICT: DEPLOYED to prod in ${(ms / 1000).toFixed(1)}s. Case closed.`)
+        addLog('gold', `VERDICT: DEPLOYED to prod in ${(ms / 1000).toFixed(1)}s. Case closed.`)
         setStats((s) => ({ ...s, won: s.won + 1, lastMs: ms }))
         setStatus('won')
         return
@@ -81,6 +84,7 @@ export function MotionToDeploy() {
       setStage(stage + 1)
     }, current.ms)
     return () => clearTimeout(timer)
+    // addLog only touches refs and setters, so it's left out of the deps on purpose
   }, [status, stage, chaos, overruled])
 
   useEffect(() => {
@@ -89,13 +93,13 @@ export function MotionToDeploy() {
   }, [log])
 
   const overrule = () => {
-    push('gold', 'Judge: OVERRULED. Retrying with quarantined test…')
+    addLog('gold', 'Judge: OVERRULED. Retrying with quarantined test…')
     setOverruled(true)
     setStatus('running')
   }
 
   const settle = () => {
-    push('dim', 'Settled out of court: rolled back to v2.4.1. Nobody got paged.')
+    addLog('dim', 'Settled out of court: rolled back to v2.4.1. Nobody got paged.')
     setStatus('settled')
   }
 
@@ -263,6 +267,7 @@ export function MotionToDeploy() {
               </div>
             )}
 
+            {/* The key changes with each result so the stamp animation plays again */}
             {(status === 'won' || status === 'objection') && (
               <p
                 key={`${status}-${stats.filed}`}

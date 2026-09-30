@@ -20,6 +20,59 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
 
+  useEffect(() => {
+    const onOpen = () => setOpen(true)
+    let seq: string[] = []
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setOpen((o) => !o)
+        return
+      }
+      // Keep the last few keys; letters are lowercased so caps lock doesn't break the code
+      seq = [...seq, e.key.length === 1 ? e.key.toLowerCase() : e.key].slice(-konami.length)
+      if (seq.join() === konami.join()) {
+        seq = []
+        emitFirmEvent(firmEvents.littUp)
+      }
+    }
+    const onLitt = () => setLitt(true)
+    window.addEventListener('keydown', onKey)
+    window.addEventListener(firmEvents.openPalette, onOpen)
+    window.addEventListener(firmEvents.littUp, onLitt)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener(firmEvents.openPalette, onOpen)
+      window.removeEventListener(firmEvents.littUp, onLitt)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (!open) return
+    returnFocus.current = document.activeElement as HTMLElement | null
+    setQuery('')
+    setActive(0)
+    const prevOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    requestAnimationFrame(() => inputRef.current?.focus())
+    return () => {
+      document.body.style.overflow = prevOverflow
+      returnFocus.current?.focus({ preventScroll: true })
+    }
+  }, [open])
+
+  useEffect(() => {
+    if (!toast) return
+    const timer = setTimeout(() => setToast(null), 2500)
+    return () => clearTimeout(timer)
+  }, [toast])
+
+  useEffect(() => {
+    if (!litt) return
+    const timer = setTimeout(() => setLitt(false), 3200)
+    return () => clearTimeout(timer)
+  }, [litt])
+
   const commands = useMemo<Command[]>(
     () => [
       { id: 'top', group: 'Navigate', label: 'Lobby', hint: 'Top of page', run: goTo('top') },
@@ -67,61 +120,10 @@ export function CommandPalette() {
     return commands.filter((c) => `${c.label} ${c.hint} ${c.group}`.toLowerCase().includes(q))
   }, [commands, query])
 
-  useEffect(() => {
-    const onOpen = () => setOpen(true)
-    let seq: string[] = []
-    const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault()
-        setOpen((o) => !o)
-        return
-      }
-      seq = [...seq, e.key.length === 1 ? e.key.toLowerCase() : e.key].slice(-konami.length)
-      if (seq.join() === konami.join()) {
-        seq = []
-        emitFirmEvent(firmEvents.littUp)
-      }
-    }
-    const onLitt = () => setLitt(true)
-    window.addEventListener('keydown', onKey)
-    window.addEventListener(firmEvents.openPalette, onOpen)
-    window.addEventListener(firmEvents.littUp, onLitt)
-    return () => {
-      window.removeEventListener('keydown', onKey)
-      window.removeEventListener(firmEvents.openPalette, onOpen)
-      window.removeEventListener(firmEvents.littUp, onLitt)
-    }
-  }, [])
-
-  useEffect(() => {
-    if (!open) return
-    returnFocus.current = document.activeElement as HTMLElement | null
-    setQuery('')
-    setActive(0)
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    requestAnimationFrame(() => inputRef.current?.focus())
-    return () => {
-      document.body.style.overflow = prev
-      returnFocus.current?.focus?.({ preventScroll: true })
-    }
-  }, [open])
-
-  useEffect(() => {
-    if (!toast) return
-    const t = setTimeout(() => setToast(null), 2500)
-    return () => clearTimeout(t)
-  }, [toast])
-
-  useEffect(() => {
-    if (!litt) return
-    const t = setTimeout(() => setLitt(false), 3200)
-    return () => clearTimeout(t)
-  }, [litt])
-
   const choose = (cmd: Command | undefined) => {
     if (!cmd) return
     setOpen(false)
+    // Wait a tick so the palette has closed and handed focus back before the command runs
     setTimeout(cmd.run, 50)
   }
 
@@ -136,6 +138,7 @@ export function CommandPalette() {
       e.preventDefault()
       setActive((a) => (filtered.length ? (a - 1 + filtered.length) % filtered.length : 0))
     } else if (e.key === 'Enter') {
+      // Enter that confirms an IME candidate shouldn't run a command
       if (e.nativeEvent.isComposing || e.keyCode === 229) return
       e.preventDefault()
       choose(filtered[active])
@@ -193,6 +196,7 @@ export function CommandPalette() {
                         {c.group}
                       </p>
                     )}
+                    {/* mousemove, not mouseenter: scrolling the list under a still cursor shouldn't change the active row */}
                     <div
                       id={`palette-${c.id}`}
                       role="option"
@@ -244,7 +248,7 @@ export function CommandPalette() {
           <div className="flex animate-stamp flex-col items-center gap-3 border-4 border-gold px-6 py-6 md:border-8 md:px-10 text-center">
             <p className="font-mono text-xs uppercase tracking-[0.4em] text-gold">Classified · Exhibit L</p>
             <p className="font-serif text-5xl uppercase text-gold md:text-8xl">Litt Up!</p>
-            <p className="font-mono text-xs text-foreground/80">{'You found the easter egg. Louis is... moved.'}</p>
+            <p className="font-mono text-xs text-foreground/80">You found the easter egg. Louis is... moved.</p>
           </div>
         </div>
       )}

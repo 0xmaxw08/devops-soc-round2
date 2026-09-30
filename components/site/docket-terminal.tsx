@@ -25,6 +25,7 @@ export function DocketTerminal() {
     }
     const id = setInterval(() => {
       setCount((c) => {
+        // 6 extra ticks keeps the finished output on screen before it restarts
         if (c >= script.length + 6) return 0
         return c + 1
       })
@@ -32,7 +33,7 @@ export function DocketTerminal() {
     return () => clearInterval(id)
   }, [])
 
-  const visible = script.slice(0, Math.min(count, script.length))
+  const visible = script.slice(0, count)
 
   return (
     <figure className="w-full border border-border bg-ink/90 shadow-2xl shadow-black/60 backdrop-blur">

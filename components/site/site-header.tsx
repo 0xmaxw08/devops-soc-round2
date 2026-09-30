@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { Menu, Search, X } from 'lucide-react'
-import { Monogram } from './monogram'
 import { emitFirmEvent, firmEvents } from '@/lib/firm-data'
+import { Monogram } from './monogram'
 
 const links = [
   { href: '#brief', label: 'The Firm' },

@@ -2,22 +2,18 @@
 
 import { useEffect, useRef } from 'react'
 
-// Elements that make the ring grow when the cursor is over them.
+// Elements that make the ring grow when hovered
 const INTERACTIVE = 'a, button, [role="button"], input, select, textarea, label, summary'
 
-/**
- * Desktop-only cursor follower: a dot pinned to the pointer and a ring that
- * trails behind it. No coordinates or text are shown.
- * Nothing is stored or sent anywhere. Position lives in local variables and is
- * written straight to the DOM, so React never re-renders on mouse move.
- */
+// Desktop-only cursor dot + trailing ring. Position is written straight to the DOM
+// (no state), so mouse moves never re-render React.
 export function CursorTracker() {
   const rootRef = useRef<HTMLDivElement>(null)
   const dotRef = useRef<HTMLDivElement>(null)
   const ringRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    // Only for devices with a real hovering mouse. Phones and tablets bail out here.
+    // Phones and tablets have no hovering mouse, so bail out
     if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return
 
     const root = rootRef.current

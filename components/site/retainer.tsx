@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { FIRM_EMAIL } from '@/lib/firm-data'
 import { SectionLabel } from './section-label'
 
 const practices = [
@@ -19,7 +20,8 @@ const labelClass = 'font-mono text-[11px] uppercase tracking-[0.2em] text-ink/60
 export function Retainer() {
   const [filed, setFiled] = useState<{ name: string; caseNo: string } | null>(null)
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  // No backend: this only fakes a case number and shows the confirmation
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = new FormData(e.currentTarget)
     const name = String(data.get('name') ?? '').trim()
@@ -52,7 +54,7 @@ export function Retainer() {
             </div>
             <div className="flex gap-6 border-b border-ink/15 pb-4">
               <dt className="w-28 text-ink/50">Counsel</dt>
-              <dd>devops@bennett.edu.in</dd>
+              <dd>{FIRM_EMAIL}</dd>
             </div>
           </dl>
         </div>

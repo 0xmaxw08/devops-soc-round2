@@ -101,17 +101,20 @@
   }
   html {
     scroll-behavior: smooth;
+    /* Clip, not hidden: no sideways scroll, and html doesn't become a scroll container */
     overflow-x: clip;
   }
   body {
     @apply bg-background text-foreground font-sans overflow-x-clip;
   }
+  /* Grid items default to min-width: auto, so wide content stretches the column */
   .grid > * {
     min-width: 0;
   }
   .grid > * {
-      grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
   }
+  /* Tailwind v4 buttons use the default cursor, so put the pointer back */
   button:not(:disabled),
   [role='button']:not([aria-disabled='true']) {
     cursor: pointer;

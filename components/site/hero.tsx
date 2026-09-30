@@ -23,7 +23,7 @@ export function Hero() {
         <div>
           <p className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-gold sm:tracking-[0.3em]">
             <span className="h-px w-10 bg-gold" />
-            The DevOps Society · Bennett University · Est2. 2022 · 42nd Floor
+            The DevOps Society · Bennett University · Est. 2022 · 42nd Floor
           </p>
           <h1 className="font-serif text-6xl leading-[0.9] text-balance sm:text-7xl lg:text-8xl xl:text-9xl">
             We don&apos;t get lucky.

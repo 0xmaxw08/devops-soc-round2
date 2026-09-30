@@ -39,7 +39,7 @@ const quickCommands = ['help', 'kubectl get partners', 'git log', 'sudo hire-me'
 
 const pad = (s: string, n: number) => (s.length > n ? `${s.slice(0, n - 1)}…` : s.padEnd(n))
 
-function run(input: string, history: string[], mountedAt: number): Omit<Line, 'id'>[] | 'clear' {
+function runCommand(input: string, history: string[], mountedAt: number): Omit<Line, 'id'>[] | 'clear' {
   const raw = input.trim()
   const cmd = raw.toLowerCase()
   const out = (text: string, tone: Tone = 'out') => ({ tone, text })
@@ -66,6 +66,7 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
 
   if (cmd === 'ls') return [out('mission.md   partners/   case-files/   closing-argument.sh   .secrets (denied)')]
 
+  // 'cat ' with the space, so a command like "catalog" doesn't count as cat
   if (cmd === 'cat' || cmd.startsWith('cat ')) {
     const file = cmd.replace('cat', '').trim()
     if (file === 'mission.md')
@@ -90,8 +91,9 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
   if (cmd.startsWith('kubectl describe partner')) {
     const q = cmd.replace('kubectl describe partner', '').trim()
     if (!q) return [out('usage: kubectl describe partner <name>  (e.g. litt)', 'err')]
+    // Match the start of any word in the name, so "litt" and "rohan" both find Rohan Litt
     const p = allPartners.find((x) =>
-        x.name.toLowerCase().split(' ').some((w) => w.startsWith(q)),
+      x.name.toLowerCase().split(' ').some((w) => w.startsWith(q)),
     )
     if (!p) return [out(`Error: partner "${q}" not found. They may have been disbarred.`, 'err')]
     return [
@@ -117,8 +119,8 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
   if (cmd === 'git blame') return [out('Every line: Rohan Litt. He insists on the credit.', 'gold')]
 
   if (cmd === 'uptime') {
-    const s = Math.floor((Date.now() - mountedAt) / 1000)
-    return [out(`You've been in session ${Math.floor(s / 60)}m ${s % 60}s · firm SLA 99.99% · load: associates`, 'ok')]
+    const seconds = Math.floor((Date.now() - mountedAt) / 1000)
+    return [out(`You've been in session ${Math.floor(seconds / 60)}m ${seconds % 60}s · firm SLA 99.99% · load: associates`, 'ok')]
   }
 
   if (cmd === 'deploy' || cmd === './closing-argument.sh') {
@@ -157,7 +159,7 @@ export function Deposition() {
   const [lines, setLines] = useState<Line[]>(() => banner.map((l, i) => ({ ...l, id: i })))
   const [value, setValue] = useState('')
   const [history, setHistory] = useState<string[]>([])
-  const [cursor, setCursor] = useState(-1)
+  const [historyIndex, setHistoryIndex] = useState(-1)
   const idRef = useRef(banner.length)
   const mountedAt = useRef(Date.now())
   const inputRef = useRef<HTMLInputElement>(null)
@@ -179,9 +181,9 @@ export function Deposition() {
   }, [])
 
   const execute = (input: string) => {
-    const result = run(input, history, mountedAt.current)
+    const result = runCommand(input, history, mountedAt.current)
     if (input.trim()) setHistory((h) => [...h, input.trim()])
-    setCursor(-1)
+    setHistoryIndex(-1)
     setValue('')
     if (result === 'clear') {
       setLines([])
@@ -195,6 +197,7 @@ export function Deposition() {
   }
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // Enter that confirms an IME candidate shouldn't run the command
     if (e.key === 'Enter' && (e.nativeEvent.isComposing || e.keyCode === 229)) {
       e.preventDefault()
       return
@@ -202,18 +205,18 @@ export function Deposition() {
     if (e.key === 'ArrowUp') {
       e.preventDefault()
       if (!history.length) return
-      const next = cursor === -1 ? history.length - 1 : Math.max(0, cursor - 1)
-      setCursor(next)
+      const next = historyIndex === -1 ? history.length - 1 : Math.max(0, historyIndex - 1)
+      setHistoryIndex(next)
       setValue(history[next])
     } else if (e.key === 'ArrowDown') {
       e.preventDefault()
-      if (cursor === -1) return
-      const next = cursor + 1
+      if (historyIndex === -1) return
+      const next = historyIndex + 1
       if (next >= history.length) {
-        setCursor(-1)
+        setHistoryIndex(-1)
         setValue('')
       } else {
-        setCursor(next)
+        setHistoryIndex(next)
         setValue(history[next])
       }
     } else if (e.key === 'Tab') {
@@ -242,7 +245,8 @@ export function Deposition() {
             Cross-examine <span className="italic text-gold">the firm.</span>
           </h2>
           <p className="max-w-md leading-relaxed text-muted-foreground">
-            {"Don't take our word for it. Put us under oath. This is a real shell: query the partners with kubectl, dig through our git history, or trigger a live deploy."}
+            Don&apos;t take our word for it. Put us under oath. This is a real shell: query the partners
+            with kubectl, dig through our git history, or trigger a live deploy.
           </p>
           <div className="flex flex-col gap-3">
             <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
@@ -255,6 +259,7 @@ export function Deposition() {
                   type="button"
                   onClick={() => {
                     execute(c)
+                    // Only refocus with a real mouse; on touch it would pop the keyboard up
                     if (window.matchMedia('(hover: hover)').matches) inputRef.current?.focus({ preventScroll: true })
                   }}
                   className="border border-border px-3 py-2 font-mono text-xs text-muted-foreground transition-colors hover:border-gold hover:text-gold"

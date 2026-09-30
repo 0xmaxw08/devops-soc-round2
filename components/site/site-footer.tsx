@@ -25,7 +25,7 @@ export function SiteFooter() {
           </ul>
         </div>
         <p className="mt-8 font-mono text-[11px] text-muted-foreground">
-          {'© 2026 Specter & Ops. All rights reserved. Not affiliated with any real law firm. No pipelines were harmed.'}
+          {'© 2026 Specter & Ops · A DevOps Society (Bennett University) project · Built by Manvendra (max) · All data is dummy.'}
         </p>
       </div>
     </footer>

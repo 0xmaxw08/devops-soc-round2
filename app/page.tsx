@@ -10,6 +10,7 @@ import { Deposition } from '@/components/site/deposition'
 import { Retainer } from '@/components/site/retainer'
 import { SiteFooter } from '@/components/site/site-footer'
 import { CommandPalette } from '@/components/site/command-palette'
+import { CursorTracker } from '@/components/site/cursor-tracker'
 
 export default function Page() {
   return (
@@ -28,6 +29,7 @@ export default function Page() {
       </main>
       <SiteFooter />
       <CommandPalette />
+      <CursorTracker />
     </>
   )
 }

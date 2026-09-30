@@ -101,9 +101,13 @@
   }
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
   }
   body {
     @apply bg-background text-foreground font-sans overflow-x-clip;
+  }
+  .grid > * {
+    min-width: 0;
   }
   button:not(:disabled),
   [role='button']:not([aria-disabled='true']) {

@@ -105,17 +105,15 @@
   body {
     @apply bg-background text-foreground font-sans;
   }
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: not-allowed;
+  }
   ::selection {
     background: var(--gold);
     color: var(--ink);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  .animate-marquee {
-    animation: none;
   }
 }

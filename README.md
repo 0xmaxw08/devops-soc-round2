@@ -31,17 +31,17 @@ Every DevOps concept is mapped to a legal one, so the site reads like a firm's w
 | **Quote ticker** | Marquee of firm sayings |
 | **The Brief** | What the society is about, written as a legal document |
 | **Practice Areas** | The six specialties and the tools taught in each |
-| **Case Files** | Events and projects as court cases, filterable by verdict (Won, Pending, Settled, Lost) |
+| **Case Files** | Events and projects as court cases, filterable by verdict (Won, Pending, Settled) |
 | **Exhibit A: Motion to Deploy** | Interactive CI/CD pipeline simulation |
 | **The Partners** | Team details as flip cards: name partners, senior partners, associates |
-| **Exhibit B: The Deposition** | A working terminal you can type into |
+| **Exhibit B: The Deposition** | A simulated terminal you can type into (a fixed set of commands, not a real shell) |
 | **Retain the Firm** | Join form (front-end only, no backend) |
 
 ## Things to try
 
 - **Motion to Deploy:** turn on *Opposing counsel*, file a motion, and rule on the failed test yourself. Overrule to retry, or settle to roll back.
 - **Command palette:** press `Ctrl K` (or `Cmd K`).
-- **Deposition shell:** try `help`, `kubectl get partners`, `kubectl describe partner litt`, `git log`, `quote`, `deploy` and `sudo hire-me`. Tab autocompletes, ↑ and ↓ scroll history, `Ctrl L` clears.
+- **Deposition terminal:** try `help`, `kubectl get partners`, `kubectl describe partner litt`, `git log`, `quote`, `deploy` and `sudo hire-me`. Tab autocompletes, ↑ and ↓ scroll history, `Ctrl L` clears.
 - **Easter egg:** enter the Konami code (`↑ ↑ ↓ ↓ ← → ← → B A`).
 
 ## Tech stack
@@ -51,7 +51,7 @@ Every DevOps concept is mapped to a legal one, so the site reads like a firm's w
 - Tailwind CSS v4 with design tokens in `@theme inline`
 - `next/font` for Geist, Geist Mono and Instrument Serif
 - `lucide-react` icons
-- Deployed on Vercel
+- Deployed on Vercel; also ships as a Docker image
 
 ## Architecture
 
@@ -80,9 +80,23 @@ pnpm dev
 Open http://localhost:3000.
 
 ```bash
-pnpm build   # production build
-pnpm start   # serve the production build
+pnpm build       # production build
+pnpm start       # serve the production build
+pnpm typecheck   # TypeScript check (the build fails on type errors too)
 ```
+
+### Docker
+
+```bash
+docker build -t specter-and-ops .
+docker run --rm -p 3000:3000 specter-and-ops
+```
+
+The image is multi-stage and runs Next.js from its standalone output as a non-root user. The Dockerfile sets `NEXT_OUTPUT=standalone`; without that variable the build is the regular one, so `pnpm start` and Vercel are unaffected.
+
+### CI
+
+`.github/workflows/ci.yml` runs on every push to `main` and on pull requests: install with the frozen lockfile, typecheck, build, then build the Docker image and check that it serves the page.
 
 ## Project structure
 
@@ -99,14 +113,17 @@ components/site/
   case-files.tsx
   motion-to-deploy.tsx  pipeline state machine
   partners.tsx, partner-card.tsx
-  deposition.tsx        terminal shell
+  deposition.tsx        terminal UI
   retainer.tsx          join form
   command-palette.tsx
   site-header.tsx, site-footer.tsx, section-label.tsx, monogram.tsx
 lib/
   firm-data.ts          partner data and event names (dummy)
+  shell.ts              terminal commands and their output
   utils.ts              cn() helper
 public/images/          hero and Brief photos
+Dockerfile              multi-stage production image
+.github/workflows/      CI (typecheck, build, Docker)
 ```
 
 ## Design decisions
@@ -125,10 +142,13 @@ The brief asked for a site built with AI plus my own work. I generated the first
 
 ## Roadmap
 
-- [ ] `Dockerfile` (multi-stage, standalone output) and `docker-compose.yml`
-- [ ] GitHub Actions workflow: typecheck, lint, build
+- [x] `Dockerfile` (multi-stage, standalone output)
+- [x] GitHub Actions workflow: typecheck, build, Docker image
+- [x] Move terminal commands into `lib/shell.ts`
+- [ ] `docker-compose.yml`
+- [ ] ESLint step in CI
 - [ ] `/api/health` route and build info in the footer
-- [ ] Move terminal logic into a pure `lib/shell.ts` with unit tests
+- [ ] Unit tests for `lib/shell.ts`
 - [ ] Retainer form backend with validation
 
 ## License

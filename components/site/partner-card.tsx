@@ -42,7 +42,7 @@ export function PartnerCard({ partner, size = 'md' }: { partner: Partner; size?:
       <div
         className={cn(
           'relative size-full transition-transform duration-700 [transform-style:preserve-3d] motion-reduce:transition-none',
-          'md:group-hover:[transform:rotateY(180deg)]',
+          !flipped && 'md:group-hover:[transform:rotateY(180deg)]',
           flipped && '[transform:rotateY(180deg)]',
         )}
       >

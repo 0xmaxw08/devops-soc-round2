@@ -66,7 +66,7 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
 
   if (cmd === 'ls') return [out('mission.md   partners/   case-files/   closing-argument.sh   .secrets (denied)')]
 
-  if (cmd.startsWith('cat')) {
+  if (cmd === 'cat' || cmd.startsWith('cat ')) {
     const file = cmd.replace('cat', '').trim()
     if (file === 'mission.md')
       return [
@@ -90,7 +90,9 @@ function run(input: string, history: string[], mountedAt: number): Omit<Line, 'i
   if (cmd.startsWith('kubectl describe partner')) {
     const q = cmd.replace('kubectl describe partner', '').trim()
     if (!q) return [out('usage: kubectl describe partner <name>  (e.g. litt)', 'err')]
-    const p = allPartners.find((x) => x.name.toLowerCase().includes(q))
+    const p = allPartners.find((x) =>
+        x.name.toLowerCase().split(' ').some((w) => w.startsWith(q)),
+    )
     if (!p) return [out(`Error: partner "${q}" not found. They may have been disbarred.`, 'err')]
     return [
       out(`Name:     ${p.name}`, 'gold'),

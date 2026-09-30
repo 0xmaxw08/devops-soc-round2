@@ -52,7 +52,7 @@ export function Retainer() {
             </div>
             <div className="flex gap-6 border-b border-ink/15 pb-4">
               <dt className="w-28 text-ink/50">Counsel</dt>
-              <dd>devops@college.edu</dd>
+              <dd>devops@bennett.edu.in</dd>
             </div>
           </dl>
         </div>

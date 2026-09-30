@@ -1,12 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  typescript: {
+  typescript: {                                                                                    
     ignoreBuildErrors: true,
-  output: 'standalone',
   },
+  output: 'standalone', // Moved out to the root object
   images: {
     unoptimized: true,
   },
 }
 
 export default nextConfig
+

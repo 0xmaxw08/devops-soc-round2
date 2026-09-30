@@ -37,7 +37,7 @@ Every DevOps concept is mapped to a legal one, so the site reads like a firm's w
 | **Exhibit B: The Deposition** | A simulated terminal you can type into (a fixed set of commands, not a real shell) |
 | **Retain the Firm** | Join form (front-end only, no backend) |
 
-## Things to try
+## Things to try :)
 
 - **Motion to Deploy:** turn on *Opposing counsel*, file a motion, and rule on the failed test yourself. Overrule to retry, or settle to roll back.
 - **Command palette:** press `Ctrl K` (or `Cmd K`).

@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   title: 'Specter & Ops — The DevOps Club',
   description:
     'The DevOps Club, run like a Manhattan law firm. We automate, we deploy, we win. Pipelines, containers, cloud and the art of the closing argument.',
+}
 
 export const viewport: Viewport = {
   colorScheme: 'dark',

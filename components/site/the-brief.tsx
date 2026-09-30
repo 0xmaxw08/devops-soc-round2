@@ -25,10 +25,10 @@ const articles = [
 ]
 
 const exhibits = [
-  { label: 'Exhibit A', value: '340+', note: 'Members admitted' },
-  { label: 'Exhibit B', value: '62', note: 'Cases argued (workshops)' },
-  { label: 'Exhibit C', value: '99.9%', note: 'Club site uptime' },
-  { label: 'Exhibit D', value: '0', note: 'Manual deploys since 2023' },
+  { label: 'Schedule 1', value: '340+', note: 'Members admitted' },
+  { label: 'Schedule 2', value: '62', note: 'Cases argued (workshops)' },
+  { label: 'Schedule 3', value: '99.9%', note: 'Club site uptime' },
+  { label: 'Schedule 4', value: '0', note: 'Manual deploys since 2023' },
 ]
 
 export function TheBrief() {

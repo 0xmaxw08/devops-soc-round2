@@ -2,6 +2,7 @@ import { SectionLabel } from './section-label'
 import { PartnerCard } from './partner-card'
 import { associates, namePartners, seniorPartners } from '@/lib/firm-data'
 
+const n = (a: unknown[]) => String(a.length).padStart(2, '0')
 export function Partners() {
   return (
     <section id="partners" className="mx-auto max-w-7xl px-5 py-24 md:px-8 md:py-32">
@@ -16,7 +17,7 @@ export function Partners() {
         </p>
       </div>
 
-      <Tier label="Name Partners" count="02">
+      <Tier label="Name Partners" count={n(namePartners)}>
         <ul className="grid gap-6 md:grid-cols-2">
           {namePartners.map((p) => (
             <li key={p.name}>
@@ -26,7 +27,7 @@ export function Partners() {
         </ul>
       </Tier>
 
-      <Tier label="Senior Partners" count="04">
+      <Tier label="Senior Partners" count={n(seniorPartners)}>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {seniorPartners.map((p) => (
             <li key={p.name}>
@@ -36,7 +37,7 @@ export function Partners() {
         </ul>
       </Tier>
 
-      <Tier label="Associates" count="04">
+      <Tier label="Associates" count={n(associates)}>
         <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {associates.map((p) => (
             <li key={p.name}>

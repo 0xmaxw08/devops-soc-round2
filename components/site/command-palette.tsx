@@ -19,8 +19,6 @@ export function CommandPalette() {
   const [litt, setLitt] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
   const returnFocus = useRef<HTMLElement | null>(null)
-  // Only scroll for keyboard moves; hover changes `active` too, and scrolling then makes the list jump under the mouse
-  const scrollToActive = useRef(false)
 
   useEffect(() => {
     const onOpen = () => setOpen(true)
@@ -122,13 +120,6 @@ export function CommandPalette() {
     return commands.filter((c) => `${c.label} ${c.hint} ${c.group}`.toLowerCase().includes(q))
   }, [commands, query])
 
-  useEffect(() => {
-    if (!open || !scrollToActive.current) return
-    scrollToActive.current = false
-    // Scroll the <li> (not just the option) so the group heading stays visible with its first item
-    document.getElementById(`palette-${filtered[active]?.id}`)?.parentElement?.scrollIntoView({ block: 'nearest' })
-  }, [open, active, filtered])
-
   const choose = (cmd: Command | undefined) => {
     if (!cmd) return
     setOpen(false)
@@ -142,11 +133,9 @@ export function CommandPalette() {
       setOpen(false)
     } else if (e.key === 'ArrowDown') {
       e.preventDefault()
-      scrollToActive.current = true
       setActive((a) => (filtered.length ? (a + 1) % filtered.length : 0))
     } else if (e.key === 'ArrowUp') {
       e.preventDefault()
-      scrollToActive.current = true
       setActive((a) => (filtered.length ? (a - 1 + filtered.length) % filtered.length : 0))
     } else if (e.key === 'Enter') {
       // Enter that confirms an IME candidate shouldn't run a command
@@ -179,7 +168,6 @@ export function CommandPalette() {
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value)
-                  scrollToActive.current = true
                   setActive(0)
                 }}
                 role="combobox"
@@ -213,10 +201,7 @@ export function CommandPalette() {
                       id={`palette-${c.id}`}
                       role="option"
                       aria-selected={i === active}
-                      onMouseMove={() => {
-                        scrollToActive.current = false
-                        setActive(i)
-                      }}
+                      onMouseMove={() => setActive(i)}
                       onClick={() => choose(c)}
                       className={cn(
                         'mx-2 flex cursor-pointer items-center justify-between gap-4 px-3 py-2.5',

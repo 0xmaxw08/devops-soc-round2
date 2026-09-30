@@ -15,13 +15,13 @@ export function Hero() {
       />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/20"
+        className="absolute inset-0 -z-10 bg-gradient-to-b from-ink/80 via-ink/70 to-ink/40 sm:bg-gradient-to-r sm:from-ink sm:via-ink/85 sm:to-ink/20"
       />
       <div aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-ink via-transparent to-ink/60" />
 
       <div className="mx-auto grid w-full max-w-7xl gap-12 px-5 pb-16 md:px-8 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:pb-24">
         <div>
-          <p className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.3em] text-gold">
+          <p className="mb-6 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-gold sm:tracking-[0.3em]">
             <span className="h-px w-10 bg-gold" />
             The DevOps Society · Bennett University · Est2. 2022 · 42nd Floor
           </p>

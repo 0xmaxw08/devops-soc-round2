@@ -4,7 +4,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-border">
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-8">
-        <p className="font-serif text-[18vw] leading-none tracking-tight text-foreground/10 md:text-[12rem]" aria-hidden="true">
+        <p className="font-serif text-[13vw] leading-none tracking-tight text-foreground/10 md:text-[12rem]" aria-hidden="true">
           Specter &amp; <span className="italic">Ops</span>
         </p>
         <div className="mt-10 flex flex-col justify-between gap-8 border-t border-border pt-8 md:flex-row md:items-center">

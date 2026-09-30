@@ -255,7 +255,7 @@ export function Deposition() {
                   type="button"
                   onClick={() => {
                     execute(c)
-                    inputRef.current?.focus({ preventScroll: true })
+                    if (window.matchMedia('(hover: hover)').matches) inputRef.current?.focus({ preventScroll: true })
                   }}
                   className="border border-border px-3 py-2 font-mono text-xs text-muted-foreground transition-colors hover:border-gold hover:text-gold"
                 >
@@ -324,7 +324,7 @@ export function Deposition() {
               autoCapitalize="off"
               spellCheck={false}
               placeholder='type "help" and press Enter'
-              className="flex-1 bg-transparent text-foreground outline-none placeholder:text-muted-foreground/60"
+              className="flex-1 bg-transparent text-base text-foreground outline-none placeholder:text-muted-foreground/60 md:text-[13px]"
             />
           </form>
         </div>

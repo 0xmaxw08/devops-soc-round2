@@ -55,16 +55,26 @@ export function SiteHeader() {
           </a>
         </nav>
 
-        <button
-          type="button"
-          className="md:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? 'Close menu' : 'Open menu'}
-        >
-          {open ? <X className="size-6" /> : <Menu className="size-6" />}
-        </button>
+        <div className="flex items-center md:hidden">
+          <button
+            type="button"
+            onClick={() => emitFirmEvent(firmEvents.openPalette)}
+            aria-label="Open command palette"
+            className="p-2"
+          >
+            <Search className="size-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            className="-mr-2 p-2"
+            onClick={() => setOpen((v) => !v)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+          >
+            {open ? <X className="size-6" /> : <Menu className="size-6" />}
+          </button>
+        </div>
       </div>
 
       {open && (

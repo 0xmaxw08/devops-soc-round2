@@ -78,7 +78,7 @@ export function CaseFiles() {
           <h2 className="max-w-2xl font-serif text-5xl leading-[0.95] text-balance md:text-7xl">
             The docket. <span className="italic text-gold">Events, projects</span> &amp; verdicts.
           </h2>
-          <div role="tablist" aria-label="Filter cases by status" className="flex border border-border">
+          <div role="tablist" aria-label="Filter cases by status" className="flex w-full overflow-x-auto border border-border md:w-auto">
             {filters.map((f) => (
               <button
                 key={f}
@@ -87,7 +87,7 @@ export function CaseFiles() {
                 aria-selected={filter === f}
                 onClick={() => setFilter(f)}
                 className={cn(
-                  'px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] transition-colors',
+                  'shrink-0 px-4 py-2 font-mono text-xs uppercase tracking-[0.15em] transition-colors',
                   filter === f ? 'bg-gold text-ink' : 'text-muted-foreground hover:text-foreground',
                 )}
               >

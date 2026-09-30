@@ -240,9 +240,9 @@ export function MotionToDeploy() {
             </div>
 
             {status === 'objection' && (
-              <div className="absolute inset-x-0 bottom-0 flex flex-col items-start gap-3 border-t border-destructive/40 bg-ink/95 p-5 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col items-start gap-3 sm:absolute sm:inset-x-0 sm:bottom-0 border-t border-destructive/40 bg-ink/95 p-5 backdrop-blur sm:flex-row sm:items-center sm:justify-between">
                 <p className="font-serif text-2xl text-destructive">How does the court rule?</p>
-                <div className="flex gap-3">
+                <div className="flex flex-wrap gap-3">
                   <button
                     type="button"
                     onClick={overrule}

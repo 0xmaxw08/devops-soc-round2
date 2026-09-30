@@ -241,9 +241,9 @@ export function CommandPalette() {
           role="status"
           className="pointer-events-none fixed inset-0 z-[120] flex items-center justify-center bg-ink/60 backdrop-blur-sm"
         >
-          <div className="flex animate-stamp flex-col items-center gap-3 border-8 border-gold px-10 py-6 text-center">
+          <div className="flex animate-stamp flex-col items-center gap-3 border-4 border-gold px-6 py-6 md:border-8 md:px-10 text-center">
             <p className="font-mono text-xs uppercase tracking-[0.4em] text-gold">Classified · Exhibit L</p>
-            <p className="font-serif text-6xl uppercase text-gold md:text-8xl">Litt Up!</p>
+            <p className="font-serif text-5xl uppercase text-gold md:text-8xl">Litt Up!</p>
             <p className="font-mono text-xs text-foreground/80">{'You found the easter egg. Louis is... moved.'}</p>
           </div>
         </div>

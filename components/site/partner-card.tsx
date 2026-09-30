@@ -36,7 +36,9 @@ export function PartnerCard({ partner, size = 'md' }: { partner: Partner; size?:
       aria-label={`${partner.name}, ${partner.title}. ${flipped ? 'Show card front' : 'Show case file'}`}
       className={cn(
         'group block w-full text-left [perspective:1200px]',
-        size === 'lg' ? 'aspect-[1.75/1]' : 'aspect-[3/4]',
+        size === 'lg'
+          ? 'aspect-[4/5] sm:aspect-[3/2] md:aspect-[4/5] lg:aspect-[1.75/1]'
+          : 'aspect-[4/3] sm:aspect-[3/4]',
       )}
     >
       <div
@@ -53,7 +55,7 @@ export function PartnerCard({ partner, size = 'md' }: { partner: Partner; size?:
               aria-hidden="true"
               className={cn(
                 'grid place-items-center border border-gold font-serif italic text-gold',
-                size === 'lg' ? 'size-20 text-4xl' : 'size-14 text-2xl',
+                size === 'lg' ? 'size-16 text-3xl lg:size-20 lg:text-4xl' : 'size-14 text-2xl',
               )}
             >
               {initials}
@@ -66,7 +68,7 @@ export function PartnerCard({ partner, size = 'md' }: { partner: Partner; size?:
             <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-gold">
               &ldquo;{partner.alias}&rdquo;
             </p>
-            <p className={cn('mt-2 font-serif leading-none', size === 'lg' ? 'text-5xl' : 'text-3xl')}>
+            <p className={cn('mt-2 font-serif leading-none', size === 'lg' ? 'text-4xl lg:text-5xl' : 'text-3xl')}>
               {partner.name}
             </p>
             <div className="mt-4 flex items-center justify-between border-t border-border pt-3 font-mono text-[11px] text-muted-foreground">
@@ -82,7 +84,7 @@ export function PartnerCard({ partner, size = 'md' }: { partner: Partner; size?:
             <span>Personnel File</span>
             <span>Record {partner.record}</span>
           </div>
-          <p className={cn('font-serif italic leading-tight', size === 'lg' ? 'text-4xl' : 'text-2xl')}>
+          <p className={cn('font-serif italic leading-tight', size === 'lg' ? 'text-2xl lg:text-4xl' : 'text-2xl')}>
             &ldquo;{partner.quote}&rdquo;
           </p>
           <div>

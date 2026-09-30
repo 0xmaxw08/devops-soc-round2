@@ -14,12 +14,12 @@ const instrument = Instrument_Serif({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://devops-soc-round2.vercel.app'),
-  title: 'Specter & Ops — The DevOps Club',
+  title: 'Specter & Ops — The DevOps Society',
   description:
-    'The DevOps Club, run like a Manhattan law firm. We automate, we deploy, we win. Pipelines, containers, cloud and the art of the closing argument.',
+    'The DevOps Society, run like a Manhattan law firm. We automate, we deploy, we win. Pipelines, containers, cloud and the art of the closing argument.',
   openGraph: {
-    title: 'Specter & Ops — The DevOps Club',
-    description: 'The DevOps Club, run like a Manhattan law firm.',
+    title: 'Specter & Ops — The DevOps Society',
+    description: 'The DevOps Society, run like a Manhattan law firm.',
     type: 'website',
   },
 }

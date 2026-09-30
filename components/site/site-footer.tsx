@@ -11,9 +11,9 @@ export function SiteFooter() {
           <div className="flex items-center gap-3">
             <Monogram className="size-10" />
             <div>
-              <p className="font-serif text-xl">The DevOps Club</p>
+              <p className="font-serif text-xl">The DevOps Society</p>
               <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
-                Attorneys at Deploy · Since 2021
+                Attorneys at Deploy · Since 2022
               </p>
             </div>
           </div>

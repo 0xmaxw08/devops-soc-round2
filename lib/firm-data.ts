@@ -4,7 +4,7 @@ export const FIRM_EMAIL = 'devops@bennett.edu.in'
 
 export const namePartners: Partner[] = [
   {
-    name: 'Aarav Specter',
+    name: 'Quandale Dingle',
     title: 'Managing Partner',
     role: 'President',
     alias: 'The Closer',

@@ -38,6 +38,7 @@ export function MotionToDeploy() {
   }
 
   const fileMotion = () => {
+    if (status === 'running') return
     startedAt.current = performance.now()
     lineId.current = 0
     setLog([])

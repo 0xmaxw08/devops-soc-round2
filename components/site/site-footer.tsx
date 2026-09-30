@@ -18,10 +18,10 @@ export function SiteFooter() {
             </div>
           </div>
           <ul className="flex flex-wrap gap-6 font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">
-            <li><a href="#" className="hover:text-gold">GitHub</a></li>
-            <li><a href="#" className="hover:text-gold">Instagram</a></li>
-            <li><a href="#" className="hover:text-gold">LinkedIn</a></li>
-            <li><a href="#" className="hover:text-gold">Discord</a></li>
+            <li><a href="https://github.com/0xmaxw0/" className="hover:text-gold">GitHub</a></li>
+            <li><a href="https://instagram.com/mnvndrahh" className="hover:text-gold">Instagram</a></li>
+            <li><a href="https://www.linkedin.com/in/maxw08#" className="hover:text-gold">LinkedIn</a></li>
+            <li><a href="https://discord.gg/rnmBpHdhqv" className="hover:text-gold">Discord</a></li>
           </ul>
         </div>
         <p className="mt-8 font-mono text-[11px] text-muted-foreground">
